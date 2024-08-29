@@ -1,0 +1,66 @@
+-- Database: curso-jsp
+
+-- DROP DATABASE IF EXISTS "curso-jsp";
+
+CREATE DATABASE "curso-jsp"
+    WITH
+    OWNER = postgres
+    ENCODING = 'UTF8'
+    LC_COLLATE = 'Portuguese_Brazil.1252'
+    LC_CTYPE = 'Portuguese_Brazil.1252'
+    LOCALE_PROVIDER = 'libc'
+    TABLESPACE = pg_default
+    CONNECTION LIMIT = -1
+    IS_TEMPLATE = False;
+
+
+
+
+
+CREATE SEQUENCE public.model_login_id_seq;
+
+
+-- Table: public.model_login
+
+-- DROP TABLE IF EXISTS public.model_login;
+
+CREATE TABLE IF NOT EXISTS public.model_login
+(
+    id integer NOT NULL DEFAULT nextval('model_login_id_seq'::regclass),
+    nome character varying(300) COLLATE pg_catalog."default",
+    email character varying(300) COLLATE pg_catalog."default",
+    login character varying(200) COLLATE pg_catalog."default",
+    senha character varying(200) COLLATE pg_catalog."default",
+    useradmin boolean NOT NULL DEFAULT false,
+    usuario_id bigint DEFAULT 1,
+    CONSTRAINT model_login_pkey PRIMARY KEY (id),
+    CONSTRAINT unique_login UNIQUE (login),
+    CONSTRAINT usuario_fk FOREIGN KEY (usuario_id)
+        REFERENCES public.model_login (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.model_login
+    OWNER to postgres;
+    
+
+INSERT INTO public.model_login(
+	nome, email, login, senha, useradmin, usuario_id)
+	VALUES ('Anselmo A Meurer', 'aameurer@gmail.com', 'admin', 'admin', 1 );
+
+
+
+
+alter table model_login add column perfil character varying(200);
+
+
+ alter table model_login add column sexo character varying(20) DEFAULT 'MASCULINO';
+ 
+ 
+ALTER TABLE MODEL_LOGIN ADD COLUMN fotouser text;
+ALTER TABLE MODEL_LOGIN ADD COLUMN extensaofotouser CHARACTER VARYING(10);    
+    
+    
