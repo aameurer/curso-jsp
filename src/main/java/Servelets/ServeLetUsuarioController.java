@@ -4,8 +4,6 @@ import java.io.IOException;
 import java.util.List;
 
 import org.apache.commons.compress.utils.IOUtils;
-import org.apache.commons.fileupload.servlet.ServletFileUpload;
-//import org.apache.commons.io.IOUtils;
 import org.apache.tomcat.util.codec.binary.Base64;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -89,14 +87,15 @@ public class ServeLetUsuarioController extends ServeLetGenericUtil {
 			 }
 			
 			 else if (acao != null && !acao.isEmpty() && acao.equalsIgnoreCase("downloadFoto")) {
-				 
+System.out.println("download - - - -chegou na imagem ");					 
 				 String idUser = request.getParameter("id");
 				 
 				 ModelLogin modelLogin =  daoUsuarioRepository.consultaUsuarioId(idUser, super.getUserLogado(request));
 				 if (modelLogin.getFotouser() != null && !modelLogin.getFotouser().isEmpty()) {
 					 
 					 response.setHeader("Content-Disposition", "attachment;filename=arquivo." + modelLogin.getExtensaofotouser());
-					 response.getOutputStream().write(new Base64().decodeBase64(modelLogin.getFotouser().split("\\,")[1]));
+					 response.getOutputStream().write(new org.apache.tomcat.util.codec.binary.Base64().decodeBase64(modelLogin.getFotouser().split("\\,")[1]));
+System.out.println(" decoder download - - - -chegou na imagem ");					 
 					 
 				 }
 				 
@@ -147,26 +146,36 @@ public class ServeLetUsuarioController extends ServeLetGenericUtil {
 		modelLogin.setSexo(sexo);
 		
 System.out.println("antes - - - -chegou na imagem ");	
-		
-		if (ServletFileUpload.isMultipartContent(request)) {
-			
-System.out.println("chegou na imagem ");
 
-			Part part = request.getPart("fileFoto"); /*Pega foto da tela*/
-			
+
+		if (request.getPart("fileFoto") != null) {
+			Part part = request.getPart("fileFoto");/* Pega a foto no frontend */
+		
 			if (part.getSize() > 0) {
-				byte[] foto = IOUtils.toByteArray(part.getInputStream()); /*Converte imagem para byte*/
-//				String imagemBase64 = "data:image/" + part.getContentType().split("\\/")[1] + ";base64," +  Base64().encodeBase64String(foto);
-				String imagemBase64 = "data:image/" + part.getContentType().split("\\/")[1] + ";base64," +  new Base64().encodeBase64String(foto);
-				
+				byte[] foto = IOUtils.toByteArray(part.getInputStream());
+		
+				String imagemBase64 = "data:image/" + part.getContentType() + ";base64,"
+						+ new org.apache.tomcat.util.codec.binary.Base64().encodeBase64String(foto);
+		
 				modelLogin.setFotouser(imagemBase64);
-				modelLogin.setExtensaofotouser(part.getContentType().split("\\/")[1]);
-				
-				
-System.out.println("chegou na imagem ");
-System.out.println(imagemBase64);
+				modelLogin.setExtensaofotouser(part.getContentType().split("\\/")[0]);
 			}
 		}
+
+		
+//		if (ServletFileUpload.isMultipartContent(request)) {
+//System.out.println("chegou na imagem ");
+//			Part part = request.getPart("fileFoto"); /*Pega foto da tela*/
+//			if (part.getSize() > 0) {
+//				byte[] foto = IOUtils.toByteArray(part.getInputStream()); /*Converte imagem para byte*/
+//				String imagemBase64 = "data:image/" + part.getContentType().split("\\/")[1] + ";base64," +  Base64().encodeBase64String(foto);
+//				String imagemBase64 = "data:image/" + part.getContentType().split("\\/")[1] + ";base64," +  new Base64().encodeBase64String(foto);
+//				modelLogin.setFotouser(imagemBase64);
+//				modelLogin.setExtensaofotouser(part.getContentType().split("\\/")[1]);
+//System.out.println("chegou na imagem ");
+//System.out.println(imagemBase64);
+//			}
+		//}
 		
 		
 		

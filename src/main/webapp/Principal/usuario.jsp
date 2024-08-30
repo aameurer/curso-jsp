@@ -110,7 +110,7 @@
 																	<option value="ADMIN" <% 
 																	ModelLogin modelLogin = (ModelLogin) request.getAttribute("modelLogin");
 																
-System.out.println(modelLogin);																
+// System.out.println(modelLogin);																
 																			if (modelLogin != null && modelLogin.getPerfil().equals("ADMIN")) {
 																				out.print(" ");
 																				out.print("selected=\"selected\"");
