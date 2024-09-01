@@ -64,3 +64,10 @@ ALTER TABLE MODEL_LOGIN ADD COLUMN fotouser text;
 ALTER TABLE MODEL_LOGIN ADD COLUMN extensaofotouser CHARACTER VARYING(10);    
     
     
+alter table model_login add column cep character varying(250);
+alter table model_login add column logradouro character varying(250);
+alter table model_login add column bairro character varying(250);
+alter table model_login add column localidade character varying(250);
+alter table model_login add column uf character varying(250);
+alter table model_login add column numero character varying(250);
+	

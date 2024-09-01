@@ -135,6 +135,13 @@ System.out.println(" decoder download - - - -chegou na imagem ");
 		String perfil = request.getParameter("perfil");
 		String sexo = request.getParameter("sexo");
 		
+		String cep = request.getParameter("cep");
+		String logradouro = request.getParameter("logradouro");
+		String bairro = request.getParameter("bairro");
+		String localidade = request.getParameter("localidade");
+		String uf = request.getParameter("uf");
+		String numero = request.getParameter("numero");
+		
 		ModelLogin modelLogin = new ModelLogin();
 		
 		modelLogin.setId(id != null && !id.isEmpty() ? Long.parseLong(id) : null);
@@ -144,6 +151,14 @@ System.out.println(" decoder download - - - -chegou na imagem ");
 		modelLogin.setSenha(senha);
 		modelLogin.setPerfil(perfil);
 		modelLogin.setSexo(sexo);
+		
+		modelLogin.setCep(cep);
+		modelLogin.setLogradouro(logradouro);
+		modelLogin.setBairro(bairro);
+		modelLogin.setLocalidade(localidade);
+		modelLogin.setUf(uf);
+		modelLogin.setNumero(numero);
+		
 		
 System.out.println("antes - - - -chegou na imagem ");	
 

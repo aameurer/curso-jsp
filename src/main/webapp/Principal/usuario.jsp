@@ -1,5 +1,5 @@
 <%@page import="Model.ModelLogin"%>
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+<%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="ISO-8859-1"%>
     
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>   
@@ -53,7 +53,7 @@
                                        
                                                     <div class="card-block">
                                                     
-                                                        <h4 class="sub-title">Cadastro de Usuário</h4>
+                                                        <h4 class="sub-title">Cadastro de UsuÃ¡rio</h4>
         								         								  
         											  
         											    
@@ -124,7 +124,7 @@
 																				out.print(" ");
 																				out.print("selected=\"selected\"");
 																				out.print(" ");
-																			}%>>Secretária</option>
+																			}%>>SecretÃ¡ria</option>
 																				
 																	<option value="AUXILIAR" <% 
 																	modelLogin = (ModelLogin) request.getAttribute("modelLogin");
@@ -138,6 +138,44 @@
 																	</select> <span class="form-bar"></span> <label	class="float-label">Perfil:</label>
 															 </div>
 
+
+
+															<div class="form-group form-default form-static-label">
+                                                                <input onblur="pesquisaCep();" type="text" name="cep" id="cep" class="form-control" required="required" autocomplete="off" value="${modelLogin.cep}">
+                                                                <span class="form-bar"></span>
+                                                                <label class="float-label">Cep</label>
+                                                            </div>
+                                                            
+															<div class="form-group form-default form-static-label">
+                                                                <input type="text" name="logradouro" id="logradouro" class="form-control" required="required" autocomplete="off" value="${modelLogin.logradouro}">
+                                                                <span class="form-bar"></span>
+                                                                <label class="float-label">Logradouro</label>
+                                                            </div> 
+                                                            
+															<div class="form-group form-default form-static-label">
+                                                                <input type="text" name="bairro" id="bairro" class="form-control" required="required" autocomplete="off" value="${modelLogin.bairro}">
+                                                                <span class="form-bar"></span>
+                                                                <label class="float-label">Bairro</label>
+                                                            </div>   
+                                                            
+															<div class="form-group form-default form-static-label">
+                                                                <input type="text" name="localidade" id="localidade" class="form-control" required="required" autocomplete="off" value="${modelLogin.localidade}">
+                                                                <span class="form-bar"></span>
+                                                                <label class="float-label">Localidade</label>
+                                                            </div>     
+                                                            
+															<div class="form-group form-default form-static-label">
+                                                                <input type="text" name="uf" id="uf" class="form-control" required="required" autocomplete="off" value="${modelLogin.uf}">
+                                                                <span class="form-bar"></span>
+                                                                <label class="float-label">Estado</label>
+                                                            </div>     
+                                                            
+															<div class="form-group form-default form-static-label">
+                                                                <input type="text" name="numero" id="numero" class="form-control" required="required" autocomplete="off" value="${modelLogin.numero}">
+                                                                <span class="form-bar"></span>
+                                                                <label class="float-label">Numero</label>
+                                                            </div>                                                                                                                                                                                    
+             
 
 
 
@@ -251,7 +289,7 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Pesquisa de Usuário</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Pesquisa de UsuÃ¡rio</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -302,9 +340,29 @@
 <script type="text/javascript">
 
 
+
+function pesquisaCep() {
+    var cep = $("#cep").val();
+    
+    $.getJSON("https://viacep.com.br/ws/"+ cep +"/json/?callback=?", function(dados) { 
+
+
+	if (!("erro" in dados)) {
+	        $("#cep").val(dados.cep);
+	        $("#logradouro").val(dados.logradouro);
+            $("#bairro").val(dados.bairro);
+            $("#localidade").val(dados.localidade);
+            $("#uf").val(dados.uf);
+	}
+	    
+	
+    });
+}
+
+
 function visualizarImg(fotoembase64, filefoto) {
     
-//	alert('Destro da função visualizarImg');
+//	alert('Destro da funÃ§Ã£o visualizarImg');
 	
     var preview = document.getElementById(fotoembase64); // campo IMG html
     var fileUser = document.getElementById(filefoto).files[0];
@@ -363,7 +421,7 @@ function buscarUsuario() {
 	     }
 	     
 	 }).fail(function(xhr, status, errorThrown){
-	    alert('Erro ao buscar usuário por nome: ' + xhr.responseText);
+	    alert('Erro ao buscar usuÃ¡rio por nome: ' + xhr.responseText);
 	 });
 	
 	
@@ -395,7 +453,7 @@ function criarDeleteComAjax() {
 	     }
 	     
 	 }).fail(function(xhr, status, errorThrown){
-	    alert('Erro ao deletar usuário por id: ' + xhr.responseText);
+	    alert('Erro ao deletar usuÃ¡rio por id: ' + xhr.responseText);
 	 });
 	 
 	  
