@@ -58,10 +58,25 @@ public class ServeLetUsuarioController extends ServeLetGenericUtil {
 					String json = mapper.writeValueAsString(dadosJsonUser);
 					
 					// System.out.println(dadosJsonUser);
-					
+					response.addHeader("totalPagina", ""+daoUsuarioRepository.consultaUsuarioListTotalPaginaPaginacao(nomeBusca, super.getUserLogado(request)));
 					response.getWriter().write(json);
 					
 			}
+			
+			else if (acao != null && !acao.isEmpty() && acao.equalsIgnoreCase("buscarUserAjaxPage")) {
+				String nomeBusca = request.getParameter("nomeBusca");
+				String pagina = request.getParameter("pagina");
+				
+				List<ModelLogin> dadosJsonUser = daoUsuarioRepository.consultaUsuaListOffSet(nomeBusca, super.getUserLogado(request), Integer.parseInt(pagina));
+				
+				ObjectMapper mapper = new ObjectMapper();
+				String json = mapper.writeValueAsString(dadosJsonUser);
+				
+				// System.out.println(dadosJsonUser);
+				response.addHeader("totalPagina", ""+daoUsuarioRepository.consultaUsuarioListTotalPaginaPaginacao(nomeBusca, super.getUserLogado(request)));
+				response.getWriter().write(json);
+			}			
+			
 			else if (acao != null && !acao.isEmpty() && acao.equalsIgnoreCase("buscarEditar")) {
 				String id = request.getParameter("id");
 	System.out.println(id);				
