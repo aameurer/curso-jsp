@@ -40,6 +40,8 @@ public class ServeLetUsuarioController extends ServeLetGenericUtil {
 	 		    request.setAttribute("modelLogins", modelLogins);
 				
 				request.setAttribute("msg", "Excluido com Sucesso!");
+				
+				request.setAttribute("totalPagina", daoUsuarioRepository.totalPagina(this.getUserLogado(request)));
 				request.getRequestDispatcher("Principal/usuario.jsp").forward(request, response);
 			} 
 			else if (acao != null && !acao.isEmpty() && acao.equalsIgnoreCase("deletarajax")) {
@@ -72,6 +74,8 @@ public class ServeLetUsuarioController extends ServeLetGenericUtil {
 				
 				request.setAttribute("msg", "Usuário em Edição");
 				request.setAttribute("modelLogin", modelLogin); // para manter os dados nos campos na tela
+				request.setAttribute("totalPagina", daoUsuarioRepository.totalPagina(this.getUserLogado(request)));
+
 				request.getRequestDispatcher("Principal/usuario.jsp").forward(request, response);
 				
 			}
@@ -82,6 +86,8 @@ public class ServeLetUsuarioController extends ServeLetGenericUtil {
 				 
 				 request.setAttribute("msg", "Usuários carregados");
 			     request.setAttribute("modelLogins", modelLogins);
+					request.setAttribute("totalPagina", daoUsuarioRepository.totalPagina(this.getUserLogado(request)));
+
 				 request.getRequestDispatcher("Principal/usuario.jsp").forward(request, response);
 				 
 			 }
@@ -101,9 +107,21 @@ System.out.println(" decoder download - - - -chegou na imagem ");
 				 
 			 }
 
+			
+			 else if (acao != null && !acao.isEmpty() && acao.equalsIgnoreCase("paginar")) {
+				 Integer offset = Integer.parseInt(request.getParameter("pagina"));
+				 
+				 List<ModelLogin> modelLogins = daoUsuarioRepository.consultaUsuarioListPaginada(this.getUserLogado(request), offset);
+				 
+				 request.setAttribute("modelLogins", modelLogins);
+			     request.setAttribute("totalPagina", daoUsuarioRepository.totalPagina(this.getUserLogado(request)));
+				 request.getRequestDispatcher("Principal/usuario.jsp").forward(request, response);
+			 }
+
 			else {
 	            List<ModelLogin> modelLogins = daoUsuarioRepository.consultaUsuarioList(super.getUserLogado(request));
 	 		    request.setAttribute("modelLogins", modelLogins);
+				request.setAttribute("totalPagina", daoUsuarioRepository.totalPagina(this.getUserLogado(request)));
 
 				request.getRequestDispatcher("Principal/usuario.jsp").forward(request, response);
 			}
@@ -212,6 +230,8 @@ System.out.println("antes - - - -chegou na imagem ");
 		
 		request.setAttribute("msg", msg);
 		request.setAttribute("modelLogin", modelLogin); // para manter os dados nos campos na tela
+		request.setAttribute("totalPagina", daoUsuarioRepository.totalPagina(this.getUserLogado(request)));
+
 		request.getRequestDispatcher("Principal/usuario.jsp").forward(request, response);
 		
 		} catch (Exception e) {
