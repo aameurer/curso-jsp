@@ -94,6 +94,16 @@
                                                                 <label class="float-label">Nome:</label>
                                                             </div>
                                                             <div class="form-group form-default form-static-label">
+                                                                <input type="text" name="dataNascimento" id="dataNascimento" class="form-control" required="required" value="${modelLogin.dataNascimento}">
+                                                                <span class="form-bar"></span>
+                                                                <label class="float-label">Data Nascimento:</label>
+                                                            </div>
+                                                            <div class="form-group form-default form-static-label">
+                                                                <input type="text" name="rendamensal" id="rendamensal" class="form-control" required="required" value="${modelLogin.rendamensal}">
+                                                                <span class="form-bar"></span>
+                                                                <label class="float-label">Renda Mensal:</label>
+                                                            </div>
+                                                            <div class="form-group form-default form-static-label">
                                                                 <input type="email" name="email" id="email" class="form-control" required="required" autocomplete="off" value="${modelLogin.email}">
                                                                 <span class="form-bar"></span>
                                                                 <label class="float-label">E-mail:</label>
@@ -228,8 +238,8 @@
 												           <button  class="btn btn-success waves-effect waves-light">Salvar</button>
 												           <button type="button"  class="btn btn-info waves-effect waves-light" onclick="criarDeleteComAjax();" >Excluir</button>
 												           
-												           <c:if test="${modolLogin.id > 0}"> 
-												               <a href="<%= request.getContextPath() %>/ServeLetTelefone?iduser=${modolLogin.id}" class="btn btn-primary waves-effect waves-light" >Telefone</a>
+												           <c:if test="${modelLogin.id > 0}"> 
+												               <a href="<%= request.getContextPath() %>/ServeLetTelefone?iduser=${modelLogin.id}" class="btn btn-primary waves-effect waves-light" >Telefone</a>
 												           </c:if>
 												           
 												           <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#exampleModalUsuario">Pesquisar</button>
@@ -372,6 +382,59 @@
 
 
 <script type="text/javascript">
+
+
+
+
+$("#rendamensal").maskMoney({showSymbol:true, symbol:"R$ ", decimal:",", thousands:"."});
+
+const formatter = new Intl.NumberFormat('pt-BR', {
+    currency : 'BRL',
+    minimumFractionDigits : 2
+});
+
+$("#rendamensal").val(formatter.format($("#rendamensal").val()));
+$("#rendamensal").focus();
+
+
+var dataNascimento = $("#dataNascimento").val();
+
+var dateFormat = new Date(dataNascimento);
+
+$("#dataNascimento").val(dateFormat.toLocaleDateString('pt-BR',{timeZone: 'UTC'}));
+
+
+
+$("#nome").focus();
+
+
+$( function() {
+	  
+	  $("#dataNascimento").datepicker({
+		    dateFormat: 'dd/mm/yy',
+		    dayNames: ['Domingo','Segunda','Terça','Quarta','Quinta','Sexta','Sábado'],
+		    dayNamesMin: ['D','S','T','Q','Q','S','S','D'],
+		    dayNamesShort: ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb','Dom'],
+		    monthNames: ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'],
+		    monthNamesShort: ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'],
+		    nextText: 'Próximo',
+		    prevText: 'Anterior'
+		});
+} );
+
+
+
+
+$("#numero").keypress(function (event) {
+ return /\d/.test(String.fromCharCode(event.keyCode)); 
+});
+
+
+$("#cep").keypress(function (event) {
+  return /\d/.test(String.fromCharCode(event.keyCode)); 
+});
+
+
 
 
 

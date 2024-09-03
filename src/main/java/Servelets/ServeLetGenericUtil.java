@@ -28,12 +28,13 @@ public class ServeLetGenericUtil extends HttpServlet implements Serializable {
 	public ModelLogin getUserLogadoObjt(HttpServletRequest request) throws Exception {
 		
 		HttpSession session = request.getSession();
-
+		
 		String usuarioLogado = (String) session.getAttribute("usuario");
 		
 		return daoUsuarioRepository.consultaUsuarioLogado(usuarioLogado);
-
+		
 	}
+
 	
 	
 	

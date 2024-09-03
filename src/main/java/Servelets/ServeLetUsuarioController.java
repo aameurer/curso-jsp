@@ -1,7 +1,9 @@
 package Servelets;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.List;
+import java.sql.Date;
 
 import org.apache.commons.compress.utils.IOUtils;
 import org.apache.tomcat.util.codec.binary.Base64;
@@ -174,6 +176,7 @@ public class ServeLetUsuarioController extends ServeLetGenericUtil {
 		String localidade = request.getParameter("localidade");
 		String uf = request.getParameter("uf");
 		String numero = request.getParameter("numero");
+		String dataNascimento = request.getParameter("dataNascimento");
 		
 		ModelLogin modelLogin = new ModelLogin();
 		
@@ -191,6 +194,7 @@ public class ServeLetUsuarioController extends ServeLetGenericUtil {
 		modelLogin.setLocalidade(localidade);
 		modelLogin.setUf(uf);
 		modelLogin.setNumero(numero);
+		modelLogin.setDataNascimento(new Date(new SimpleDateFormat("dd/mm/yyyy").parse(dataNascimento).getTime()));
 		
 		
 System.out.println("antes - - - -chegou na imagem ");	

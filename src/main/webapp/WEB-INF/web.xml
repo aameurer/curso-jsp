@@ -4,14 +4,4 @@
   <welcome-file-list>
     <welcome-file>index.jsp</welcome-file>
   </welcome-file-list>
-  <servlet>
-    <description></description>
-    <display-name>ServeLetTelefone</display-name>
-    <servlet-name>ServeLetTelefone</servlet-name>
-    <servlet-class>Servelets.ServeLetTelefone</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>ServeLetTelefone</servlet-name>
-    <url-pattern>/ServeLetTelefone</url-pattern>
-  </servlet-mapping>
-</web-app>
+ </web-app>

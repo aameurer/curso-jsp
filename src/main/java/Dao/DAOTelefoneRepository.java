@@ -23,7 +23,7 @@ public class DAOTelefoneRepository {
 	
 	public List<ModelTelefone> listFone(Long idUserPai) throws Exception{
 		List<ModelTelefone> retorno = new ArrayList<ModelTelefone>();
-		String sql = "select * from tefefone where usuario_pai_id = ?";
+		String sql = "select * from telefone where usuario_pai_id = ?";
 		PreparedStatement preparedStatement = connection.prepareStatement(sql);
 		
 		preparedStatement.setLong(1, idUserPai);
@@ -31,6 +31,7 @@ public class DAOTelefoneRepository {
 		ResultSet rs = preparedStatement.executeQuery();
 		while (rs.next()) {
 			ModelTelefone modelTelefone = new ModelTelefone();
+			
 			modelTelefone.setId(rs.getLong("id"));
 			modelTelefone.setNumero(rs.getString("numero"));
 			modelTelefone.setUsuario_cad_id(daoUsuarioRepository.consultaUsuarioId(rs.getLong("usuario_cad_id")));
@@ -46,7 +47,7 @@ public class DAOTelefoneRepository {
 	
 	
 	public void gravaTelefone(ModelTelefone modelTelefone) throws Exception {
-		String sql = "insert into tefefone (numero, usuario_pai_id, usuario_cad_id) values (?,?,?)";
+		String sql = "insert into telefone (numero, usuario_pai_id, usuario_cad_id) values (?,?,?)";
 		PreparedStatement preparedStatement = connection.prepareStatement(sql);
 		preparedStatement.setString(1, modelTelefone.getNumero());
 		preparedStatement.setLong(2, modelTelefone.getUsuario_pai_id().getId());
@@ -58,7 +59,7 @@ public class DAOTelefoneRepository {
 	}
 
 	public void deleteFone(Long id) throws Exception {
-		String sql = "delete from tefefone where id = ?";
+		String sql = "delete from telefone where id = ?";
 		PreparedStatement preparedStatement = connection.prepareStatement(sql);
 		preparedStatement.setLong(1, id);
 		

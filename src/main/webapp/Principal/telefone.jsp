@@ -35,7 +35,7 @@
 				<div class="pcoded-wrapper">
 
 
-					<jsp:include page="navbarmainmenu.jsp"></jsp:include>
+					<jsp:include page="navbarmaimenu.jsp"></jsp:include>
 
 
 					<div class="pcoded-content">
@@ -150,6 +150,20 @@
 
 
 	<jsp:include page="javascripfile.jsp"></jsp:include>
+	
+	
+	
+<script type="text/javascript">
+
+
+$("#numero").keypress(function (event) {
+	  return /\d/.test(String.fromCharCode(event.keyCode)); 
+	});
+	
+	
+	
+</script>	
+	
 </body>
 
 
