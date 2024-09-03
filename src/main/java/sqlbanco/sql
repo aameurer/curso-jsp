@@ -70,4 +70,32 @@ alter table model_login add column bairro character varying(250);
 alter table model_login add column localidade character varying(250);
 alter table model_login add column uf character varying(250);
 alter table model_login add column numero character varying(250);
+
+
+
+
+
+
+
+
+CREATE SEQUENCE IF NOT EXISTS telefone_seq
+    INCREMENT 1
+    START 1
+    MINVALUE 1
+    MAXVALUE 9223372036854775807
+    CACHE 1;
+
+CREATE TABLE telefone
+(
+    id integer NOT NULL DEFAULT nextval('telefone_seq'::regclass),
+    numero character varying(50) not null,
+    usuario_pai_id bigint not null DEFAULT 1,
+    usuario_cad_id bigint not null DEFAULT 1,
+    
+	CONSTRAINT tefefone_pkey PRIMARY KEY (id),
+    CONSTRAINT usuario_pai_fk FOREIGN KEY (usuario_pai_id) references model_login (id),
+    CONSTRAINT usuario_cad_fk FOREIGN KEY (usuario_cad_id) references model_login (id)
+	
+)
+
 	

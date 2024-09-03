@@ -79,10 +79,10 @@ public class ServeLetUsuarioController extends ServeLetGenericUtil {
 			
 			else if (acao != null && !acao.isEmpty() && acao.equalsIgnoreCase("buscarEditar")) {
 				String id = request.getParameter("id");
-	System.out.println(id);				
+//	System.out.println(id);				
 				ModelLogin modelLogin = daoUsuarioRepository.consultaUsuarioId(id, super.getUserLogado(request));
 				
-	System.out.println(modelLogin);
+//	System.out.println(modelLogin);
 				
 	            List<ModelLogin> modelLogins = daoUsuarioRepository.consultaUsuarioList(super.getUserLogado(request));
 	 		    request.setAttribute("modelLogins", modelLogins);
@@ -108,7 +108,7 @@ public class ServeLetUsuarioController extends ServeLetGenericUtil {
 			 }
 			
 			 else if (acao != null && !acao.isEmpty() && acao.equalsIgnoreCase("downloadFoto")) {
-System.out.println("download - - - -chegou na imagem ");					 
+//System.out.println("download - - - -chegou na imagem ");					 
 				 String idUser = request.getParameter("id");
 				 
 				 ModelLogin modelLogin =  daoUsuarioRepository.consultaUsuarioId(idUser, super.getUserLogado(request));
@@ -116,7 +116,7 @@ System.out.println("download - - - -chegou na imagem ");
 					 
 					 response.setHeader("Content-Disposition", "attachment;filename=arquivo." + modelLogin.getExtensaofotouser());
 					 response.getOutputStream().write(new org.apache.tomcat.util.codec.binary.Base64().decodeBase64(modelLogin.getFotouser().split("\\,")[1]));
-System.out.println(" decoder download - - - -chegou na imagem ");					 
+//System.out.println(" decoder download - - - -chegou na imagem ");					 
 					 
 				 }
 				 

@@ -5,6 +5,7 @@
 
 <c:set scope="session" var="perfil" value='<%= request.getSession().getAttribute("perfil").toString() %>'></c:set>
 
+
              <nav class="pcoded-navbar">
                       <div class="sidebar_toggle"><a href="#"><i class="icon-close icons"></i></a></div>
                       <div class="pcoded-inner-navbar main-menu">
@@ -14,13 +15,12 @@
                               
                                    <c:if test="${imagemUser != '' && imagemUser != null}">
                                      <img class="img-80 img-radius" src="${imagemUser}" alt="User-Profile-Image">
- System.out.println("entrou");	                                     
                                   </c:if>
                                   
                                    <c:if test="${imagemUser == '' ||  imagemUser == null}">
                                      <img class="img-80 img-radius" src="<%= request.getContextPath() %>/assets/images/avatar-4.jpg" alt="User-Profile-Image">
- System.out.println("não entrou");	                                     
                                   </c:if>
+   
 
 
                                   
