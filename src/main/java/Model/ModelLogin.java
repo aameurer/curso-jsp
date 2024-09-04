@@ -3,6 +3,8 @@ package Model;
 import java.io.Serializable;
 //import java.util.Date;
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ModelLogin implements Serializable {
 
@@ -34,7 +36,17 @@ public class ModelLogin implements Serializable {
 	
 	
 	
+	private List<ModelTelefone> telefones = new ArrayList<ModelTelefone>();
 	
+	
+	public void setTelefones(List<ModelTelefone> telefones) {
+		this.telefones = telefones;
+	}
+	
+	public List<ModelTelefone> getTelefones() {
+		return telefones;
+	}
+
 	
 	
 	
@@ -194,4 +206,16 @@ public class ModelLogin implements Serializable {
 		this.senha = senha;
 	}
 
+	public String getMostraTelefoneRel() {
+		
+		String fone = "Telefone:\n\n";
+		
+		for (ModelTelefone modelTelefone : telefones) {
+			fone += modelTelefone.getNumero() + "\n";
+		}
+		
+		return fone;
+	}
+
+	
 }

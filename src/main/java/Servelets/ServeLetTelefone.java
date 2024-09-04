@@ -83,27 +83,34 @@ public class ServeLetTelefone extends ServeLetGenericUtil {
 			String usuario_pai_id = request.getParameter("id");
 			String numero = request.getParameter("numero");
 			
-			ModelTelefone modelTelefone = new ModelTelefone();
+			if (!daoTelefoneRepository.existeFone(numero, Long.valueOf(usuario_pai_id))) {
+				
+				ModelTelefone modelTelefone = new ModelTelefone();
+				
+				modelTelefone.setNumero(numero);
+				modelTelefone.setUsuario_pai_id(daoUsuarioRepository.consultaUsuarioId(Long.parseLong(usuario_pai_id)));
+				modelTelefone.setUsuario_cad_id(super.getUserLogadoObjt(request));
+				
+				daoTelefoneRepository.gravaTelefone(modelTelefone);
+				
+				request.setAttribute("msg", "Salvo com sucesso");
 			
-			modelTelefone.setNumero(numero);
-			modelTelefone.setUsuario_pai_id(daoUsuarioRepository.consultaUsuarioId(Long.parseLong(usuario_pai_id)));
-			modelTelefone.setUsuario_cad_id(super.getUserLogadoObjt(request));
-			
-			daoTelefoneRepository.gravaTelefone(modelTelefone);
+			}else {
+				request.setAttribute("msg", "Telefone já existe");
+			}
 			
 			List<ModelTelefone> modelTelefones = daoTelefoneRepository.listFone(Long.parseLong(usuario_pai_id));
-			
+				
 			ModelLogin modelLogin = daoUsuarioRepository.consultaUsuarioId(Long.parseLong(usuario_pai_id));
-			
+				
 			request.setAttribute("modelLogin", modelLogin);
 			request.setAttribute("modelTelefones", modelTelefones);
-			request.setAttribute("msg", "Salvo com sucesso");
 			request.getRequestDispatcher("Principal/telefone.jsp").forward(request, response);
-		 
 		
 		}catch (Exception e) {
 			e.printStackTrace();
 		}
+
 
 	}
 
