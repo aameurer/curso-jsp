@@ -1,12 +1,13 @@
 package Servelets;
 
+import java.io.File;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.List;
 import java.sql.Date;
+import java.text.SimpleDateFormat;
+import java.util.HashMap;
+import java.util.List;
 
 import org.apache.commons.compress.utils.IOUtils;
-import org.apache.tomcat.util.codec.binary.Base64;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -19,6 +20,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.Part;
+import util.ReportUtil;
 
 
 @MultipartConfig
@@ -137,6 +139,7 @@ public class ServeLetUsuarioController extends ServeLetGenericUtil {
 			
 			
 			 else if (acao != null && !acao.isEmpty() && acao.equalsIgnoreCase("imprimirRelatorioUser")) {
+System.out.println(" Entrou no Imrimir Relatorio ");					 
 				 
 				 String dataInicial = request.getParameter("dataInicial");
 				 String dataFinal = request.getParameter("dataFinal");
@@ -168,6 +171,36 @@ public class ServeLetUsuarioController extends ServeLetGenericUtil {
 				request.getRequestDispatcher("Principal/usuario.jsp").forward(request, response);
 			}
 			
+			
+			 else if (acao != null && !acao.isEmpty() && acao.equalsIgnoreCase("imprimirRelatorioPDF")) {
+				 
+				 String dataInicial = request.getParameter("dataInicial");
+				 String dataFinal = request.getParameter("dataFinal");
+				 
+				 List<ModelLogin> modelLogins = null;
+				 
+				 if (dataInicial == null || dataInicial.isEmpty() && dataFinal == null || dataFinal.isEmpty()) {
+					 
+					 modelLogins = daoUsuarioRepository.consultaUsuarioListRel(super.getUserLogado(request));
+					 
+				 }else {
+					 
+					 modelLogins = daoUsuarioRepository
+							 .consultaUsuarioListRel(super.getUserLogado(request), dataInicial, dataFinal);
+				 }
+				 
+				 
+				 HashMap<String, Object> params = new HashMap<String, Object>();
+				 params.put("PARAM_SUB_REPORT", request.getServletContext().getRealPath("relatorio") + File.separator);
+				 
+				 byte[] relatorio = new ReportUtil().geraReltorioPDF(modelLogins, "rel-user-jsp", params, request.getServletContext());
+				 
+				 
+				 response.setHeader("Content-Disposition", "attachment;filename=arquivo.pdf");
+				 response.getOutputStream().write(relatorio);
+				 
+			 }
+
 			
 			
 		} catch (Exception e) {
