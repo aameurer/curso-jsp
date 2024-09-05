@@ -127,6 +127,8 @@ public class ServeLetUsuarioController extends ServeLetGenericUtil {
 			 }
 
 			
+			
+			
 			 else if (acao != null && !acao.isEmpty() && acao.equalsIgnoreCase("paginar")) {
 				 Integer offset = Integer.parseInt(request.getParameter("pagina"));
 				 
@@ -136,6 +138,8 @@ public class ServeLetUsuarioController extends ServeLetGenericUtil {
 			     request.setAttribute("totalPagina", daoUsuarioRepository.totalPagina(this.getUserLogado(request)));
 				 request.getRequestDispatcher("Principal/usuario.jsp").forward(request, response);
 			 }
+			
+			
 			
 			
 			 else if (acao != null && !acao.isEmpty() && acao.equalsIgnoreCase("imprimirRelatorioUser")) {
@@ -163,44 +167,52 @@ System.out.println(" Entrou no Imrimir Relatorio ");
 			 }
 
 
-			else {
-	            List<ModelLogin> modelLogins = daoUsuarioRepository.consultaUsuarioList(super.getUserLogado(request));
-	 		    request.setAttribute("modelLogins", modelLogins);
-				request.setAttribute("totalPagina", daoUsuarioRepository.totalPagina(this.getUserLogado(request)));
+			
+			
+	
+			
+				 else if (acao != null && !acao.isEmpty() && acao.equalsIgnoreCase("imprimirRelatorioPDF")) {
+ System.out.println(" Entrou no Imrimir Relatorio PDF ");					 
+					 					 
+					 String dataInicial = request.getParameter("dataInicial");
+					 String dataFinal = request.getParameter("dataFinal");
+					 
+					 List<ModelLogin> modelLogins = null;
+					 
+					 if (dataInicial == null || dataInicial.isEmpty() && dataFinal == null || dataFinal.isEmpty()) {
+						 
+						 modelLogins = daoUsuarioRepository.consultaUsuarioListRel(super.getUserLogado(request));
+						 
+					 }else {
+						 
+						 modelLogins = daoUsuarioRepository
+								 .consultaUsuarioListRel(super.getUserLogado(request), dataInicial, dataFinal);
+					 }
+					 
+					 
+					 HashMap<String, Object> params = new HashMap<String, Object>();
+					 params.put("PARAM_SUB_REPORT", request.getServletContext().getRealPath("relatorio") + File.separator);
+					 
+					 byte[] relatorio = new ReportUtil().geraReltorioPDF(modelLogins, "rel-user-jsp", params, request.getServletContext());
 
-				request.getRequestDispatcher("Principal/usuario.jsp").forward(request, response);
-			}
-			
-			
-			 else if (acao != null && !acao.isEmpty() && acao.equalsIgnoreCase("imprimirRelatorioPDF")) {
-				 
-				 String dataInicial = request.getParameter("dataInicial");
-				 String dataFinal = request.getParameter("dataFinal");
-				 
-				 List<ModelLogin> modelLogins = null;
-				 
-				 if (dataInicial == null || dataInicial.isEmpty() && dataFinal == null || dataFinal.isEmpty()) {
+//					 byte[] relatorio = new ReportUtil().geraReltorioPDF(modelLogins, "rel-user-jsp", request.getServletContext());
 					 
-					 modelLogins = daoUsuarioRepository.consultaUsuarioListRel(super.getUserLogado(request));
 					 
-				 }else {
+					 response.setHeader("Content-Disposition", "attachment;filename=arquivo.pdf");
+					 response.getOutputStream().write(relatorio);
 					 
-					 modelLogins = daoUsuarioRepository
-							 .consultaUsuarioListRel(super.getUserLogado(request), dataInicial, dataFinal);
 				 }
-				 
-				 
-				 HashMap<String, Object> params = new HashMap<String, Object>();
-				 params.put("PARAM_SUB_REPORT", request.getServletContext().getRealPath("relatorio") + File.separator);
-				 
-				 byte[] relatorio = new ReportUtil().geraReltorioPDF(modelLogins, "rel-user-jsp", params, request.getServletContext());
-				 
-				 
-				 response.setHeader("Content-Disposition", "attachment;filename=arquivo.pdf");
-				 response.getOutputStream().write(relatorio);
-				 
-			 }
 
+
+			
+			
+				 else {
+					 List<ModelLogin> modelLogins = daoUsuarioRepository.consultaUsuarioList(super.getUserLogado(request));
+					 request.setAttribute("modelLogins", modelLogins);
+					 request.setAttribute("totalPagina", daoUsuarioRepository.totalPagina(this.getUserLogado(request)));
+					 request.getRequestDispatcher("Principal/usuario.jsp").forward(request, response);
+				 }
+			
 			
 			
 		} catch (Exception e) {

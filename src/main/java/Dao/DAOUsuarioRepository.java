@@ -138,6 +138,7 @@ public List<ModelLogin> consultaUsuarioListRel(Long userLogado) throws Exception
 			//modelLogin.setSenha(resultado.getString("senha"));
 			modelLogin.setPerfil(resultado.getString("perfil"));
 			modelLogin.setSexo(resultado.getString("sexo"));
+			modelLogin.setDataNascimento(resultado.getDate("datanascimento"));
 			
 			modelLogin.setTelefones(this.listFone(modelLogin.getId()));
 			
@@ -171,6 +172,7 @@ public List<ModelLogin> consultaUsuarioListRel(Long userLogado) throws Exception
 			//modelLogin.setSenha(resultado.getString("senha"));
 			modelLogin.setPerfil(resultado.getString("perfil"));
 			modelLogin.setSexo(resultado.getString("sexo"));
+			modelLogin.setDataNascimento(resultado.getDate("datanascimento"));
 			
 			modelLogin.setTelefones(this.listFone(modelLogin.getId()));
 			
@@ -228,6 +230,7 @@ public List<ModelLogin> consultaUsuarioListRel(Long userLogado) throws Exception
 			//modelLogin.setSenha(resultado.getString("senha"));
 			modelLogin.setPerfil(resultado.getString("perfil"));
 			modelLogin.setSexo(resultado.getString("sexo"));
+			modelLogin.setDataNascimento(resultado.getDate("datanascimento"));
 			
 			retorno.add(modelLogin);
 		}
@@ -259,6 +262,7 @@ public List<ModelLogin> consultaUsuarioListRel(Long userLogado) throws Exception
 			//modelLogin.setSenha(resultado.getString("senha"));
 			modelLogin.setPerfil(resultado.getString("perfil"));
 			modelLogin.setSexo(resultado.getString("sexo"));
+			modelLogin.setDataNascimento(resultado.getDate("datanascimento"));
 			
 			retorno.add(modelLogin);
 		}
@@ -286,6 +290,7 @@ public List<ModelLogin> consultaUsuarioListRel(Long userLogado) throws Exception
 			modelLogin.setNome(resultado.getString("nome"));
 			modelLogin.setPerfil(resultado.getString("perfil"));
 			modelLogin.setSexo(resultado.getString("sexo"));
+			modelLogin.setDataNascimento(resultado.getDate("datanascimento"));
 			
 			retorno.add(modelLogin);
 			
@@ -313,6 +318,7 @@ public List<ModelLogin> consultaUsuarioListRel(Long userLogado) throws Exception
 			modelLogin.setNome(resultado.getString("nome"));
 			modelLogin.setPerfil(resultado.getString("perfil"));
 			modelLogin.setSexo(resultado.getString("sexo"));
+			modelLogin.setDataNascimento(resultado.getDate("datanascimento"));
 			
 			retorno.add(modelLogin);
 			

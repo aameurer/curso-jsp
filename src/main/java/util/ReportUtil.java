@@ -22,6 +22,7 @@ public class ReportUtil implements Serializable {
 	
 	
 	public byte[] geraReltorioPDF(List listaDados, String nomeRelatorio, HashMap<String, Object> params, ServletContext servletContext) throws Exception {
+System.out.println(" Entrou na função: geraReltorioPDF" );					 
 		
 		
 		/*Cria a lista de dados que vem do nosso SQL da consulta feita */
@@ -31,7 +32,8 @@ public class ReportUtil implements Serializable {
 		
 		
 		JasperPrint impressoraJasper = JasperFillManager.fillReport(caminhoJasper, params, jrbcds);
-		
+System.out.println(" Saiu na função: " + impressoraJasper);					 
+		 		
 		return JasperExportManager.exportReportToPdf(impressoraJasper);
 		
 	}
@@ -39,6 +41,7 @@ public class ReportUtil implements Serializable {
 
 	public byte[] geraReltorioPDF(List listaDados, String nomeRelatorio, ServletContext servletContext) throws Exception {
 		
+System.out.println(" Entrou na função: geraReltorioPDF" );					 
 		
 		/*Cria a lista de dados que vem do nosso SQL da consulta feita */
 		JRBeanCollectionDataSource jrbcds = new JRBeanCollectionDataSource(listaDados);
@@ -47,6 +50,7 @@ public class ReportUtil implements Serializable {
 		
 		
 		JasperPrint impressoraJasper = JasperFillManager.fillReport(caminhoJasper, new HashMap(), jrbcds);
+System.out.println(" Saiu na função: " + impressoraJasper);					 
 		
 		return JasperExportManager.exportReportToPdf(impressoraJasper);
 		
