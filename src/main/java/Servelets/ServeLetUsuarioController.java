@@ -13,6 +13,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import Dao.DAOUsuarioRepository;
 import Model.ModelLogin;
+import beandto.BeanDtoGraficoSalarioUser;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.MultipartConfig;
@@ -204,7 +205,41 @@ System.out.println(" Entrou no Imrimir Relatorio ");
 				 }
 
 
-			
+				 else if (acao != null && !acao.isEmpty() && acao.equalsIgnoreCase("graficoSalario")) {
+System.out.println(" Entrou no Imrimir Grafico ");					 
+					 String dataInicial = request.getParameter("dataInicial");
+					 String dataFinal = request.getParameter("dataFinal");
+					 
+					 
+					 if (dataInicial == null || dataInicial.isEmpty() 
+							 && dataFinal == null || dataFinal.isEmpty()) {
+						 
+						 
+						 BeanDtoGraficoSalarioUser beanDtoGraficoSalarioUser =   daoUsuarioRepository.
+								 montarGraficoMediaSalario(super.getUserLogado(request));
+						 
+						   ObjectMapper mapper = new ObjectMapper();
+						 
+						   String json = mapper.writeValueAsString(beanDtoGraficoSalarioUser);
+						 
+						   response.getWriter().write(json);
+						 
+						 
+					 }else {
+						 
+						 BeanDtoGraficoSalarioUser beanDtoGraficoSalarioUser =   daoUsuarioRepository.
+								 montarGraficoMediaSalario(super.getUserLogado(request), dataInicial, dataFinal);
+						 
+						   ObjectMapper mapper = new ObjectMapper();
+						 
+						   String json = mapper.writeValueAsString(beanDtoGraficoSalarioUser);
+						 
+						   response.getWriter().write(json);
+						 
+				
+					 }
+				 }
+					 
 			
 				 else {
 					 List<ModelLogin> modelLogins = daoUsuarioRepository.consultaUsuarioList(super.getUserLogado(request));
